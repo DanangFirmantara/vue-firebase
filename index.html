@@ -7,34 +7,79 @@
     <script src="https://unpkg.com/vue@3.0.2"></script>
 </head>
 <style>
-    .box {
-        padding: 100px 0;
-        width: 400px;
-        text-align: center;
-        background: #ddd;
-        margin: 20px;
-        display: inline-block;
+    body {
+        background-color: #eee;
+        margin: 20px 40px;
+    }
+
+    p,
+    h3,
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style-type: none;
+        background-color: #fff;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    li:hover {
+        transform: translateX(20px);
+        animation: ease;
+    }
+
+    li:active,
+    li.fav:active {
+        background-color: #fc81c3;
+    }
+
+    li.fav {
+        background-color: #ff9ed2;
     }
 </style>
 
 <body>
-    <h1>Hello, Vue js :)</h1>
     <div id="app">
-        <div v-if="showBooks">
-            <p>{{ title }} - {{ author }} - {{ age }}</p>
-
+        <h1>Gerd Media</h1>
+        <div v-if="filterBooks.length > 0">
+            <h1>List Favorite Books</h1>
+            <div>
+                <ul>
+                    <li v-for="book in filterBooks" :class="{ fav: book.isFav }" @click="toggleFav(book)">
+                        <img :alt="book.title" :src="book.image" width="100" height="150" />
+                        <h3>{{ book.title }}</h3>
+                        <p>{{ book.author}} </p>
+                    </li>
+                </ul>
+            </div>
         </div>
         <button @click="toggleShow">
             <span>
                 {{ buttonShow }}
             </span>
         </button>
+        <div v-if="showBooks">
+            <h1>list books</h1>
+            <div>
+                <ul>
+                    <li v-for="book in filterBooksNotFav" :class="{ fav: book.isFav }" @click="toggleFav(book)">
+                        <img :alt="book.title" :src="book.image" width="100" height="150" />
+                        <h3>{{ book.title }}</h3>
+                        <p>{{ book.author}} </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <br>
-        <!-- mouse event -->
-        <div class="box" @mouseover="handleEvent($event, 5)">mouseover (enter)</div>
-        <div class="box" @mouseleave="handleEvent">mouseleave</div>
-        <div class="box" @dblclick="handleEvent">double click</div>
-        <div class="box" @mousemove="handleMouseMove">position - {{ x }} {{ y }} </div>
+
     </div>
 
     <script src="app.js"></script>

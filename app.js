@@ -3,34 +3,25 @@ console.log("run render")
 const app = Vue.createApp({
     data() {
         return {
-            showBooks : true,
-            title: 'The Final Empire',
-            author: "Brandon Anderson",
-            age : 45,
-            buttonShow : "Show Book",
-            x : 0,
-            y : 0
+            showBooks : false,
+            buttonShow : 'Show List Book',
+            books: [
+                { title: 'Pulang', author : 'Tere Liye', image : './assets/pulang.jpg', isFav : true},
+                { title: 'Pergi', author : 'Tere Liye', image : './assets/pergi.jpg', isFav : true},
+                { title: 'Pulang Pergi', author : 'Tere Liye', image : './assets/pulang_pergi.jpg', isFav: false},
+            ]
         }
     },
     methods: {
-        changeTitle(title) {
-            this.title = title
-        },
-        resetData(){
-            this.title = 'The Final Empire'
-            this.author = "Brandon Anderson"
-            this.age = 45
-        },
         toggleShow(){
             this.showBooks = !this.showBooks
             if(this.showBooks){
-                this.buttonShow = "Hide Book"
+                this.buttonShow = "Hide List Book"
             } else {
-                this.buttonShow = "Show Book"
+                this.buttonShow = "Show List Book"
             }
         },
         handleEvent(e, data) {
-            console.log(e.type)
             if(data){
                 console.log(data)
             }
@@ -38,6 +29,17 @@ const app = Vue.createApp({
         handleMouseMove(e) {
             this.x = e.offsetX
             this.y = e.offsetY
+        },
+        toggleFav(e){
+            e.isFav = !e.isFav
+        }
+    },
+    computed: {
+        filterBooks() {
+            return this.books.filter(e => e.isFav)
+        },
+        filterBooksNotFav() {
+            return this.books.filter(e => !e.isFav)
         }
     }
 })
